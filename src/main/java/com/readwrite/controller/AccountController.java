@@ -26,6 +26,7 @@ public class AccountController {
     public AccountDO findByUserId(@RequestParam("userId") String userId) {
 
         AccountDO accountDO = accountService.findByUserId(userId);
+
         return accountDO;
     }
 
