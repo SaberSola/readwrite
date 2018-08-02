@@ -16,14 +16,14 @@ public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public String orderPay(Integer count, BigDecimal amount) throws Exception{
         final Order order = buildOrder(count, amount);
         final int rows = orderMapper.save(order);
         //异常回滚测试
-        if (1==1){
+     /*   if (1==1){
             throw  new RuntimeException("测试抛异常");
-        }
+        }*/
         return "success";
     }
     private Order buildOrder(Integer count, BigDecimal amount) {
