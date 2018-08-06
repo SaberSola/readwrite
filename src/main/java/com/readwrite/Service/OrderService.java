@@ -1,7 +1,9 @@
 package com.readwrite.Service;
 
 
+import com.readwrite.conf.annotation.Locked;
 import com.readwrite.entity.Order;
+import com.readwrite.lock.DistributedLock;
 import com.readwrite.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,28 @@ public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    DistributedLock distributedLock;
+
+
     @Transactional(rollbackFor = Exception.class)
+    //@Locked("#count") 注解的方式加锁
     public String orderPay(Integer count, BigDecimal amount) throws Exception{
         final Order order = buildOrder(count, amount);
-        final int rows = orderMapper.save(order);
+        String key ="zhanglei";
+        try {
+            //加锁
+            boolean lock = distributedLock.lock(key, 100000, 5, 100);
+            if (lock) {
+                final int rows = orderMapper.save(order);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            //这里要释放锁
+            distributedLock.releaseLock(key);
+        }
+
         //异常回滚测试
      /*   if (1==1){
             throw  new RuntimeException("测试抛异常");

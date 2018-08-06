@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -154,6 +155,7 @@ public class DataSourceConfiguration {
         //默认使用主库
         proxy.setDefaultTargetDataSource(masterDataSource());
         proxy.setTargetDataSources(targetDataSource);
+        System.out.print("b");
         return proxy;
     }
 }

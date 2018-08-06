@@ -1,10 +1,11 @@
-package com.springdatalock.config;
+package com.readwrite.conf.redis;
 
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,18 +18,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableCaching//启用缓存，这个注解很重要；
 public class RedisCacheConfig {
-    /**
-     * 缓存管理器.
-     *
-     * @param redisTemplate
-     * @return
-     */
+
+
     @Bean
     public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
         CacheManager cacheManager = new RedisCacheManager(redisTemplate);
         return cacheManager;
     }
-
 
     /**
      * redis模板操作类,类似于jdbcTemplate的一个类;
@@ -43,8 +39,8 @@ public class RedisCacheConfig {
      * @return
      */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate();
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(factory);
 
         RedisSerializer<String> stringRedisSerializer = new StringRedisSerializer();//Long类型不可以会出现异常信息;
@@ -52,7 +48,6 @@ public class RedisCacheConfig {
         redisTemplate.setValueSerializer(new FastJsonJsonRedisSerializer<>());
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
         redisTemplate.setHashValueSerializer(stringRedisSerializer);
-
         return redisTemplate;
     }
 

@@ -1,4 +1,4 @@
-package com.springdatalock.config;
+package com.readwrite.conf.redis;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
