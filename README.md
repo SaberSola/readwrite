@@ -1,1 +1,3 @@
-springboot 实现简单的读写分离
+springboot
+1 实现简单的读写分离
+2 实现redistemplate结合lua脚本加锁方式
