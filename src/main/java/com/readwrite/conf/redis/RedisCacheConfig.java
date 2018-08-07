@@ -52,11 +52,11 @@ public class RedisCacheConfig {
     }
 
     @Bean
-    public RedisTemplate<String, String> stringRedisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, String> stringRedisTemplate = new RedisTemplate();
+    public RedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate stringRedisTemplate = new RedisTemplate();
         stringRedisTemplate.setConnectionFactory(factory);
 
-        RedisSerializer<String> stringRedisSerializer = new StringRedisSerializer();//Long类型不可以会出现异常信息;
+        RedisSerializer stringRedisSerializer = new StringRedisSerializer();//Long类型不可以会出现异常信息;
         stringRedisTemplate.setKeySerializer(stringRedisSerializer);
         stringRedisTemplate.setValueSerializer(new FastJsonJsonRedisSerializer<>());
         stringRedisTemplate.setHashKeySerializer(stringRedisSerializer);
