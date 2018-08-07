@@ -1,5 +1,6 @@
-package com.readwrite.conf;
+package com.readwrite.conf.aspect;
 
+import com.readwrite.db.DbContextHolder;
 import com.readwrite.conf.annotation.SlaveDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

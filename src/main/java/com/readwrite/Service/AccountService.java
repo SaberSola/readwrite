@@ -1,7 +1,6 @@
 package com.readwrite.Service;
 
 
-import com.readwrite.conf.MasterSlaveAspect;
 import com.readwrite.conf.annotation.RateLimit;
 import com.readwrite.conf.annotation.SlaveDataSource;
 import com.readwrite.entity.AccountDO;

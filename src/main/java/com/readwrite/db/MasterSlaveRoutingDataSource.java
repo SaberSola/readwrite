@@ -1,4 +1,4 @@
-package com.readwrite.conf;
+package com.readwrite.db;
 
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;

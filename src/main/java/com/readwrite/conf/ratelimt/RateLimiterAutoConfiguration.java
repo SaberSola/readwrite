@@ -1,7 +1,7 @@
 package com.readwrite.conf.ratelimt;
 
 
-import com.readwrite.conf.RedisLimitBootStrap;
+import com.readwrite.ratelimtit.RedisLimitBootStrap;
 import com.readwrite.conf.redis.RedisCacheConfig;
 import com.readwrite.ratelimtit.RateLimiterClient;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

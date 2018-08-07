@@ -1,4 +1,4 @@
-package com.readwrite.conf;
+package com.readwrite.ratelimtit;
 
 import com.readwrite.common.RedisLimiteConfig;
 import com.readwrite.common.RedisLimiteConfigList;
