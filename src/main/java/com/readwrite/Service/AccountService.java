@@ -2,6 +2,7 @@ package com.readwrite.Service;
 
 
 import com.readwrite.conf.MasterSlaveAspect;
+import com.readwrite.conf.annotation.RateLimit;
 import com.readwrite.conf.annotation.SlaveDataSource;
 import com.readwrite.entity.AccountDO;
 import com.readwrite.mapper.AccountMapper;
@@ -23,6 +24,7 @@ public class AccountService {
 
 
     @SlaveDataSource
+    @RateLimit(key = "zhanglei",context = "zl")
     public AccountDO findByUserId(String userId) {
         final AccountDO accountDO = accountMapper.findByUserId(userId);
         logger.debug("异步测试结果为----------------》" +accountDO.getBalance());

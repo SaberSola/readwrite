@@ -6,6 +6,8 @@ import com.readwrite.common.constants.RateLimterConstants;
 import com.readwrite.common.type.Token;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
@@ -58,9 +60,8 @@ public class RateLimiterClient implements DistributedRateLimit{
      */
     @Override
     public boolean acquire(String context, String key) {
-        //TODO 考虑以注解的形式由service层传参数过来
         Token token = acquireToken(context, key);
-        return token.isPass() || token.isAccessRedisFail();
+        return token.isPass();
     }
 
 
@@ -75,10 +76,17 @@ public class RateLimiterClient implements DistributedRateLimit{
         try {
 
             //返回当前时间redis服务器的时间
-            RedisCallback<Long> redisCallback = redisConnection ->{ return redisConnection.time(); };
+            //TODO 妈的 自己环境可以用表达式 公司的工程环境不行
+        /*    RedisCallback<Long> redisCallback = redisConnection ->{ return redisConnection.time(); };
 
-            Long currMillSecond = stringRedisTemplate.execute(redisCallback);
+            Long currMillSecond = stringRedisTemplate.execute(redisCallback);*/
             //开始申请令牌
+            Long currMillSecond = stringRedisTemplate.execute(new RedisCallback<Long>() {
+                @Override
+                public Long doInRedis(RedisConnection connection) throws DataAccessException {
+                    return connection.time();
+                }
+            });
             Long acquire = stringRedisTemplate.execute(rateLimiterClientLua, ImmutableList.of(getKey(key)),
                     RateLimterConstants.RATE_LIMITER_ACQUIRE_METHOD, permits.toString(), currMillSecond.toString(), context);
             if (acquire == 1) {

@@ -9,7 +9,7 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       druid:
           master:
-             url: jdbc:mysql://&&&&&&&&&&&&&&&&&&&:3306/tcc_order?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
+             url: jdbc:mysql://#################:3306/tcc_order?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
              username: admin
              password: admin
              validation-query: SELECT 1
@@ -26,7 +26,7 @@ spring:
                                  enabled: false
              use-global-data-source-stat: true
           slave:
-             url: jdbc:mysql://################:3306/tcc_order?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
+             url: jdbc:mysql://@@@@@@@@@@@@@@@@:3306/tcc_account?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
              username: admin
              password: admin
              validation-query: SELECT 1
@@ -44,14 +44,16 @@ spring:
              use-global-data-source-stat: true
   redis:
           database: 0
-          host: 
+          host: @@@@@@@@@@
           port: 6379
           password:
-          timeout: 0
+          timeout: 10000
           pool:
-             max-active: 8
+             max-active: 80
              max-wait: -1
-             max-idle: 8
+             max-idle: 10
              min-idle: 0
+
+
 logging:
   config: classpath:log4j2.xml
